@@ -73,7 +73,6 @@ export function Players() {
         title="Remover Turma"
         type="SECONDARY"        
       />
-
       
     </Container>
   )
