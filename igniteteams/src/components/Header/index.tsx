@@ -11,7 +11,7 @@ export function Header({showBackButton = false}: Props) {
   const navigation = useNavigation()
 
   function handleGoBack() {
-    //volta sempre para tela anterior
+    //volta sempre para tela
     navigation.goBack()
   }
 
