@@ -1,22 +1,18 @@
 import React from 'react';
 import { VStack, Image, Text, Center, Heading, ScrollView } from 'native-base';
 
-
-import { useNavigation } from '@react-navigation/native';
-import {AuthNavigatorRoutesProps} from '../routes/auth.routes'
-
 import Logo from '../assets/logo.svg'
 import BgImg from '../assets/background.png'
-
 import { Input } from '../components/Input';
 import { Button } from '../components/Button';
+import { useNavigation } from '@react-navigation/native';
 
-export function SignIn() {
+export function SignUp() {
 
-    const navigation = useNavigation<AuthNavigatorRoutesProps>()
+    const navigation = useNavigation()
 
-    function handleNewAccount() {
-        navigation.navigate('signUp')
+    function handleGoBack() {
+        navigation.goBack()
     }
 
     return (
@@ -26,7 +22,7 @@ export function SignIn() {
         >
             <VStack flex={1} px={5} pb={16}>
                 <Image
-                    source={BgImg}
+                    source={BgImg}                    
                     defaultSource={BgImg}
                     alt='Pessoas Treinando'
                     resizeMode='contain'
@@ -43,8 +39,12 @@ export function SignIn() {
 
                 <Center>
                     <Heading color="gray.100" fontSize="xl" mb={6} fontFamily="heading">
-                        Acesse sua conta
+                        Crie sua conta
                     </Heading>
+
+                    <Input 
+                        placeholder='Nome'
+                    />
 
                     <Input 
                         placeholder='E-mail' 
@@ -57,22 +57,17 @@ export function SignIn() {
                         secureTextEntry
                     />
 
-                    <Button title='Acessar'/>
+                    <Button title='Criar e acessar'/>
 
                 </Center>
 
-                <Center mt={24}>
-                    
-                    <Text color="gray.100" fontSize="sm" mb={3} fontFamily="body">
-                        Ainda não tem acesso?
-                    </Text>
-
-                    <Button 
-                        title='Criar Conta' 
-                        variant="outline" 
-                        onPress={handleNewAccount}
-                    />
-                </Center>
+                
+                <Button 
+                    title='Voltar para o login' 
+                    variant="outline" 
+                    mt={24}
+                    onPress={handleGoBack}
+                />
             </VStack>
         </ScrollView>
     );
