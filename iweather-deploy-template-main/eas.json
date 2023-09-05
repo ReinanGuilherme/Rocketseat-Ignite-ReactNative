@@ -11,5 +11,10 @@
         "EXPO_PUBLIC_WEATHER_APP_ID": "de289af6cd612e1edf61ee671bf3caf6"
       }
     },
+    "production": {
+      "env": {
+        "EXPO_PUBLIC_WEATHER_APP_ID": "de289af6cd612e1edf61ee671bf3caf6"
+      }
+    }
   },
 }
