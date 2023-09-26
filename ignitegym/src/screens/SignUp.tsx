@@ -1,74 +1,124 @@
-import React from 'react';
-import { VStack, Image, Text, Center, Heading, ScrollView } from 'native-base';
+import { useNavigation } from "@react-navigation/native";
+import { VStack, Image, Text, Center, Heading, ScrollView } from "native-base";
+import { useForm, Controller } from 'react-hook-form';
 
-import Logo from '../assets/logo.svg'
-import BgImg from '../assets/background.png'
-import { Input } from '../components/Input';
-import { Button } from '../components/Button';
-import { useNavigation } from '@react-navigation/native';
+import LogoSvg from '../assets/logo.svg';
+import BackgroundImg from '../assets/background.png';
+import { Input } from "../components/Input";
+import { Button } from "../components/Button";
+
+type FormDataProps = {
+    name: string;
+    email: string;
+    password: string;
+    password_confirm: string;
+  }
 
 export function SignUp() {
+  
+  const { control, handleSubmit } = useForm<FormDataProps>();
 
-    const navigation = useNavigation()
+  const navigation = useNavigation();
 
-    function handleGoBack() {
-        navigation.goBack()
-    }
+  function handleGoBack() {
+    navigation.goBack();
+  }
 
-    return (
-        <ScrollView 
-            contentContainerStyle={{flexGrow: 1}} 
-            showsVerticalScrollIndicator={false}
-        >
-            <VStack flex={1} px={5} pb={16}>
-                <Image
-                    source={BgImg}                    
-                    defaultSource={BgImg}
-                    alt='Pessoas Treinando'
-                    resizeMode='contain'
-                    position="absolute"
-                />
+  function handleSignUp({ name, email, password, password_confirm }: FormDataProps) {
+    console.log({ name, email, password, password_confirm })    
+  }
 
-                <Center my={24}>
-                    <Logo />
+  return (
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
+        <VStack flex={1} px={10} pb={16}>
+        <Image 
+          source={BackgroundImg}
+          defaultSource={BackgroundImg}
+          alt="Pessoas treinando"
+          resizeMode="contain"
+          position="absolute"
+        />
 
-                    <Text color="gray.100" fontSize="sm">
-                        Treine sua mente e o seu corpo
-                    </Text>
-                </Center>
+        <Center my={24}>
+          <LogoSvg />
 
-                <Center>
-                    <Heading color="gray.100" fontSize="xl" mb={6} fontFamily="heading">
-                        Crie sua conta
-                    </Heading>
+          <Text color="gray.100" fontSize="sm">
+            Treine sua mente e o seu corpo.
+          </Text>
+        </Center>
 
-                    <Input 
-                        placeholder='Nome'
-                    />
+        <Center>
+          <Heading color="gray.100" fontSize="xl" mb={6} fontFamily="heading">
+            Crie sua conta
+          </Heading>
 
-                    <Input 
-                        placeholder='E-mail' 
-                        keyboardType='email-address'
-                        autoCapitalize='none'
-                    />
-                    
-                    <Input 
-                        placeholder='Senha' 
-                        secureTextEntry
-                    />
+          <Controller 
+            control={control}
+            name="name"
+            render={({ field: { onChange, value } }) => (
+              <Input 
+                placeholder="Nome"
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+          />
 
-                    <Button title='Criar e acessar'/>
+          <Controller 
+            control={control}
+            name="email"
+            render={({ field: { onChange, value } }) => (
+              <Input 
+                placeholder="E-mail" 
+                keyboardType="email-address"
+                autoCapitalize="none"
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+          />
 
-                </Center>
+          <Controller 
+            control={control}
+            name="password"
+            render={({ field: { onChange, value } }) => (
+              <Input 
+                placeholder="Senha" 
+                secureTextEntry
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+          />
 
-                
-                <Button 
-                    title='Voltar para o login' 
-                    variant="outline" 
-                    mt={24}
-                    onPress={handleGoBack}
-                />
-            </VStack>
-        </ScrollView>
-    );
+          <Controller 
+            control={control}
+            name="password_confirm"
+            render={({ field: { onChange, value } }) => (
+              <Input 
+                placeholder="Confirmar a Senha" 
+                secureTextEntry
+                onChangeText={onChange}
+                value={value}
+                onSubmitEditing={handleSubmit(handleSignUp)}
+                returnKeyType="send"
+              />
+            )}
+          />
+
+          <Button 
+            title="Criar e acessar" 
+            onPress={handleSubmit(handleSignUp)}
+          />
+        </Center>
+        
+        <Button 
+          title="Voltar para o login" 
+          variant="outline" 
+          mt={24}
+          onPress={handleGoBack}
+        />
+      </VStack>
+    </ScrollView>
+  );
 }
