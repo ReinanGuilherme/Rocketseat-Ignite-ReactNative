@@ -9,6 +9,7 @@ import { Button } from "../components/Button";
 
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { api } from "../services/api";
 
 type FormDataProps = {
     name: string;
@@ -37,15 +38,8 @@ export function SignUp() {
   }
 
   async function handleSignUp({ name, email, password, password_confirm }: FormDataProps) {
-    const response = await fetch('http://192.168.2.161:3333/users', {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({name, email, password})
-    })
-    const data = await response.json()
+    const response = await api.post('/users', { name, email, password });
+    const data = await response.data.json()
   }
 
   return (
