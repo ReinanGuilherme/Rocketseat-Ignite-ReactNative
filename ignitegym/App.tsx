@@ -5,6 +5,7 @@ import {THEME} from './src/theme'
 import { Loading } from './src/components/Loading';
 import { useEffect } from 'react';
 import { Routes } from './src/routes';
+import { AuthContext, AuthContextProvider } from './src/context/AuthContext';
 
 export default function App() {
 
@@ -25,7 +26,10 @@ export default function App() {
         backgroundColor="transparent"
         translucent
       />
-      {fontsLoaded ? <Routes/> : <Loading/>  }
+      
+      <AuthContextProvider>
+        {fontsLoaded ? <Routes /> : <Loading />}
+      </AuthContextProvider>
     </NativeBaseProvider>
   );
 }
